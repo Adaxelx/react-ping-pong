@@ -17,3 +17,8 @@ export const TimerWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+export const Button = styled.button`
+  width: 100px;
+  padding: 4px 8px;
+`;

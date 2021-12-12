@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BottomBar, TimerWrapper, Wrapper } from "./App.styled";
+import { BottomBar, TimerWrapper, Wrapper, Button } from "./App.styled";
 import PingPongBoard from "./PingPongBoard";
 
 import { Player } from "./PingPongBoard/types";
@@ -34,11 +34,11 @@ function App() {
         />
       )}
       <BottomBar>
-        <button onClick={() => setIsPaused((prev) => !prev)}>
+        <Button onClick={() => setIsPaused((prev) => !prev)}>
           {isPaused ? "Resume" : "Pause"}
-        </button>
+        </Button>
         <p>{`${score[Player.LEFT]}:${score[Player.RIGHT]}`}</p>
-        <button
+        <Button
           onClick={() => {
             setTime(0);
             setScore(initialScore);
@@ -46,7 +46,7 @@ function App() {
           }}
         >
           Reset
-        </button>
+        </Button>
       </BottomBar>
     </Wrapper>
   );

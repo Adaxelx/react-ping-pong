@@ -1,10 +1,16 @@
 import React from "react";
-import Canvas from "./Canvas";
+import PingPongBoard from "./PingPongBoard";
+import { Player } from "./PingPongBoard/types";
 
 function App() {
+  const [score, setScore] = React.useState({
+    [Player.LEFT]: 0,
+    [Player.RIGHT]: 0,
+  });
+
   return (
     <div style={{ padding: "16px" }}>
-      <Canvas width={600} height={400} />
+      <PingPongBoard setScore={setScore} />
     </div>
   );
 }

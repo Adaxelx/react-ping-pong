@@ -15,7 +15,9 @@ export type KeyBindings = {
   bottom: string;
 };
 export interface CanvasProps {
+  isPaused: boolean;
   setScore: Dispatch<SetStateAction<Score>>;
+  setPendingReset: Dispatch<SetStateAction<boolean>>;
 }
 
 export type CollisionType = {

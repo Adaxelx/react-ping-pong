@@ -15,17 +15,20 @@ import {
 } from "../helpers";
 import { Ball, Score } from "../types";
 
+interface UseCanvasProps {
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  yPlayer1: number;
+  yPlayer2: number;
+  isPaused: boolean;
+  setScore: React.Dispatch<React.SetStateAction<Score>>;
+}
 const useCanvas = ({
   canvasRef,
   yPlayer1,
   yPlayer2,
   setScore,
-}: {
-  canvasRef: React.RefObject<HTMLCanvasElement>;
-  yPlayer1: number;
-  yPlayer2: number;
-  setScore: React.Dispatch<React.SetStateAction<Score>>;
-}) => {
+  isPaused,
+}: UseCanvasProps) => {
   const ball = React.useRef<Ball>(initialBall);
 
   React.useEffect(() => {
@@ -34,7 +37,7 @@ const useCanvas = ({
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("Missing context ref");
     let frameCount = 0;
-    let animationFrameId: number;
+    let animationFrameId: number | null = null;
 
     const render = () => {
       frameCount++;
@@ -67,7 +70,6 @@ const useCanvas = ({
         }));
         ball.current = initialBall;
       }
-
       drawBall({
         ctx,
         frameCount,
@@ -78,14 +80,17 @@ const useCanvas = ({
         frameCount,
         pos: { x: secondPalletX, y: yPlayer2 },
       });
-      animationFrameId = window.requestAnimationFrame(render);
+      if (!isPaused) {
+        animationFrameId = window.requestAnimationFrame(render);
+      }
     };
+
     render();
 
     return () => {
-      window.cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) window.cancelAnimationFrame(animationFrameId);
     };
-  }, [ball, canvasRef, setScore, yPlayer1, yPlayer2]);
+  }, [ball, canvasRef, isPaused, setScore, yPlayer1, yPlayer2]);
 };
 
 export default useCanvas;

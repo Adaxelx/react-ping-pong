@@ -5,7 +5,11 @@ import { useCanvas, usePalletsMove } from "./hooks";
 
 import { CanvasProps } from "./types";
 
-const PingPongBoard = ({ setScore }: CanvasProps) => {
+const PingPongBoard = ({
+  setScore,
+  isPaused,
+  setPendingReset,
+}: CanvasProps) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   const startPos = canvasHeight / 2 - hPallet / 2;
@@ -13,7 +17,15 @@ const PingPongBoard = ({ setScore }: CanvasProps) => {
   const [yPlayer1, setYPlayer1] = React.useState(startPos);
   const [yPlayer2, setYPlayer2] = React.useState(startPos);
 
-  useCanvas({ canvasRef, yPlayer1, yPlayer2, setScore });
+  useCanvas({
+    canvasRef,
+    yPlayer1,
+    yPlayer2,
+    setScore,
+    isPaused,
+  });
+
+  React.useEffect(() => () => setPendingReset(false), [setPendingReset]);
 
   usePalletsMove({ hPallet, setYPlayer1, setYPlayer2 });
 

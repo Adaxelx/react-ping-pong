@@ -28,6 +28,7 @@ function App() {
       </TimerWrapper>
       {!pendingReset && (
         <PingPongBoard
+          score={score}
           setPendingReset={setPendingReset}
           isPaused={isPaused}
           setScore={setScore}

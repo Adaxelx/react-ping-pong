@@ -1,5 +1,10 @@
 import * as React from "react";
-import { canvasHeight, canvasWidth, hPallet } from "./constants";
+import {
+  canvasHeight,
+  canvasWidth,
+  hPallet,
+  startPalletPos,
+} from "./constants";
 
 import { useCanvas, usePalletsMove } from "./hooks";
 
@@ -9,13 +14,17 @@ const PingPongBoard = ({
   setScore,
   isPaused,
   setPendingReset,
+  score,
 }: CanvasProps) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const startPos = canvasHeight / 2 - hPallet / 2;
+  const [yPlayer1, setYPlayer1] = React.useState(startPalletPos);
+  const [yPlayer2, setYPlayer2] = React.useState(startPalletPos);
 
-  const [yPlayer1, setYPlayer1] = React.useState(startPos);
-  const [yPlayer2, setYPlayer2] = React.useState(startPos);
+  React.useEffect(() => {
+    setYPlayer1(startPalletPos);
+    setYPlayer2(startPalletPos);
+  }, [score]);
 
   useCanvas({
     canvasRef,

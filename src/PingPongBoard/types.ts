@@ -16,6 +16,7 @@ export type KeyBindings = {
 };
 export interface CanvasProps {
   isPaused: boolean;
+  score: Score;
   setScore: Dispatch<SetStateAction<Score>>;
   setPendingReset: Dispatch<SetStateAction<boolean>>;
 }

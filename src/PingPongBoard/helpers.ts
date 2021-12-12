@@ -83,9 +83,9 @@ export const handleKeyBind = (
   { top, bottom }: KeyBindings
 ) => {
   if (clicked === top) {
-    return -5;
+    return -15;
   } else if (clicked === bottom) {
-    return 5;
+    return 15;
   }
   return 0;
 };

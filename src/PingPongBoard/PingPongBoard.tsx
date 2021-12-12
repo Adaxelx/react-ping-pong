@@ -27,7 +27,7 @@ const PingPongBoard = ({
 
   React.useEffect(() => () => setPendingReset(false), [setPendingReset]);
 
-  usePalletsMove({ hPallet, setYPlayer1, setYPlayer2 });
+  usePalletsMove({ hPallet, setYPlayer1, setYPlayer2, isPaused });
 
   return <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} />;
 };

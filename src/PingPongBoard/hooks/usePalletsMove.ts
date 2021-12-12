@@ -5,15 +5,19 @@ import { PosChangeProps } from "../types";
 
 type Dispatch = React.Dispatch<React.SetStateAction<number>>;
 
+interface UsePalletsMoveProps {
+  hPallet: number;
+  setYPlayer2: Dispatch;
+  setYPlayer1: Dispatch;
+  isPaused: boolean;
+}
+
 const usePalletsMove = ({
   hPallet,
   setYPlayer2,
   setYPlayer1,
-}: {
-  hPallet: number;
-  setYPlayer2: Dispatch;
-  setYPlayer1: Dispatch;
-}) => {
+  isPaused,
+}: UsePalletsMoveProps) => {
   const [pressedKeys, setPressedKeys] = React.useState<string[]>([]);
   const maxY = canvasHeight - hPallet;
 
@@ -23,6 +27,9 @@ const usePalletsMove = ({
       setter,
       keyBind,
     }: PosChangeProps) => {
+      if (isPaused) {
+        return;
+      }
       const playerChange =
         actuallyClicked
           .map((key) => handleKeyBind(key, keyBind))
@@ -69,15 +76,16 @@ const usePalletsMove = ({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [maxY, pressedKeys, setYPlayer1, setYPlayer2]);
+  }, [isPaused, maxY, pressedKeys, setYPlayer1, setYPlayer2]);
 
   React.useEffect(() => {
     const handleKeyUp = (e: KeyboardEvent) => {
+      if (isPaused) return;
       setPressedKeys((prevKeys) => prevKeys.filter((key) => key !== e.key));
     };
     window.addEventListener("keyup", handleKeyUp);
     return () => window.removeEventListener("keyup", handleKeyUp);
-  }, []);
+  }, [isPaused]);
 };
 
 export default usePalletsMove;
